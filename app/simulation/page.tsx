@@ -3,41 +3,17 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MessageCircle, Heart, Share, MoreHorizontal } from 'lucide-react'
+import { generateMistralResponse } from '../utils/mistralInterface'
 
-const realWorldExamples = [
-  {
-    trigger: "hate",
-    example: {
-      case: "En 2021, un étudiant a perdu son admission à l'université après avoir publié des commentaires haineux",
-      consequence: "L'université a annulé son admission après que ses tweets sont devenus viraux"
-    }
-  },
-  {
-    trigger: "menace",
-    example: {
-      case: "Une adolescente a eu des problèmes juridiques après avoir menacé son école sur les réseaux sociaux",
-      consequence: "Elle a été arrêtée et expulsée de l'école, même si elle disait que c'était 'une blague'"
-    }
-  },
-  // Add more examples
-]
+async function generateAIResponse(tweet: string) {
+  const prompt = `Analysez le tweet suivant et fournissez une réponse comme si vous étiez un modérateur IA. Incluez les conséquences potentielles avec des exemples si le tweet est inapproprié. Répondez en français.
 
-const AIResponses = [
-  {
-    type: "hate",
-    responses: [
-      "Ce type de message peut être considéré comme de l'incitation à la haine. As-tu pensé aux conséquences légales ?",
-      "Publier des messages haineux peut avoir des répercussions sur ton avenir. Voici un exemple réel :"
-    ]
-  },
-  {
-    type: "positive",
-    responses: [
-      "Super message ! C'est ce genre de positivité qui rend Internet meilleur.",
-      "Excellent exemple de communication responsable en ligne !"
-    ]
-  }
-]
+Tweet: "${tweet}"
+
+Réponse:`;
+
+  return await generateMistralResponse(prompt);
+}
 
 export default function SimulationPage() {
   const [tweets, setTweets] = useState<Array<{
@@ -45,69 +21,47 @@ export default function SimulationPage() {
     content: string;
     timestamp: string;
     likes: number;
-    replies: number;
-    shares: number;
+    reponses: number;
+    partages: number;
     isAIResponse?: boolean;
-    consequence?: string;
   }>>([])
   const [tweetContent, setTweetContent] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const analyzeTweet = (content: string) => {
-    const lowerContent = content.toLowerCase()
-    if (lowerContent.includes('kill') || lowerContent.includes('hate') || lowerContent.includes('stupid')) {
-      return 'hate'
-    }
-    return 'positive'
-  }
+  const handleTweet = async () => {
+    if (!tweetContent.trim() || isLoading) return
 
-  const getRelevantExample = (type: string) => {
-    return realWorldExamples.find(example => example.trigger === type)?.example
-  }
+    setIsLoading(true)
 
-  const handleTweet = () => {
-    if (!tweetContent.trim()) return
-
-    const tweetType = analyzeTweet(tweetContent)
-    const example = getRelevantExample(tweetType)
-    const aiResponse = AIResponses.find(response => response.type === tweetType)
-
-    const newTweets = [
-      {
-        id: Date.now(),
-        content: tweetContent,
-        timestamp: new Date().toLocaleTimeString(),
-        likes: 0,
-        replies: 0,
-        shares: 0
-      }
-    ]
-
-    if (aiResponse) {
-      newTweets.push({
-        id: Date.now() + 1,
-        content: aiResponse.responses[Math.floor(Math.random() * aiResponse.responses.length)],
-        timestamp: new Date().toLocaleTimeString(),
-        likes: 0,
-        replies: 0,
-        shares: 0,
-        isAIResponse: true
-      })
-
-      if (example) {
-        newTweets.push({
-          id: Date.now() + 2,
-          content: `${example.case}\n\nConséquence : ${example.consequence}`,
-          timestamp: new Date().toLocaleTimeString(),
-          likes: 0,
-          replies: 0,
-          shares: 0,
-          isAIResponse: true
-        })
-      }
+    const newTweet = {
+      id: Date.now(),
+      content: tweetContent,
+      timestamp: new Date().toLocaleTimeString(),
+      likes: 0,
+      reponses: 0,
+      partages: 0
     }
 
-    setTweets(prev => [...newTweets, ...prev])
+    setTweets(prev => [newTweet, ...prev])
     setTweetContent('')
+
+    try {
+      const aiResponse = await generateAIResponse(tweetContent)
+      const aiTweet = {
+        id: Date.now() + 1,
+        content: aiResponse,
+        timestamp: new Date().toLocaleTimeString(),
+        likes: 0,
+        reponses: 0,
+        partages: 0,
+        isAIResponse: true
+      }
+      setTweets(prev => [aiTweet, ...prev])
+    } catch (error) {
+      console.error('Erreur lors de la génération de la réponse IA:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -119,7 +73,7 @@ export default function SimulationPage() {
       >
         <div className="p-4 border-b">
           <h1 className="text-xl font-bold">Simulation X/Twitter</h1>
-          <p className="text-sm text-gray-600">Apprends les conséquences de tes publications</p>
+          <p className="text-sm text-gray-600">Apprenez les conséquences de vos publications</p>
         </div>
 
         <div className="p-4 border-b">
@@ -129,16 +83,17 @@ export default function SimulationPage() {
               <textarea
                 value={tweetContent}
                 onChange={(e) => setTweetContent(e.target.value)}
-                placeholder="Que veux-tu partager ?"
+                placeholder="Quoi de neuf ?"
                 className="w-full p-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows={3}
               />
               <div className="flex justify-end mt-2">
                 <button
                   onClick={handleTweet}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors"
+                  disabled={isLoading}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors disabled:opacity-50"
                 >
-                  Publier
+                  {isLoading ? 'Publication en cours...' : 'Publier'}
                 </button>
               </div>
             </div>
@@ -160,7 +115,7 @@ export default function SimulationPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <span className="font-bold">
-                      {tweet.isAIResponse ? 'AI Conseiller' : 'Toi'}
+                      {tweet.isAIResponse ? 'Modérateur IA' : 'Vous'}
                     </span>
                     <span className="text-gray-500">· {tweet.timestamp}</span>
                   </div>
@@ -168,7 +123,7 @@ export default function SimulationPage() {
                   <div className="flex gap-6 mt-4 text-gray-500">
                     <button className="flex items-center gap-2 hover:text-blue-500">
                       <MessageCircle size={18} />
-                      <span>{tweet.replies}</span>
+                      <span>{tweet.reponses}</span>
                     </button>
                     <button className="flex items-center gap-2 hover:text-pink-500">
                       <Heart size={18} />
@@ -176,7 +131,7 @@ export default function SimulationPage() {
                     </button>
                     <button className="flex items-center gap-2 hover:text-green-500">
                       <Share size={18} />
-                      <span>{tweet.shares}</span>
+                      <span>{tweet.partages}</span>
                     </button>
                     <button className="hover:text-blue-500">
                       <MoreHorizontal size={18} />

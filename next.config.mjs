@@ -7,6 +7,12 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  output: 'standalone',
+  env: {
+    MISTRAL_API_KEY: process.env.MISTRAL_API_KEY,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -46,3 +52,4 @@ function mergeConfig(nextConfig, userConfig) {
 }
 
 export default nextConfig
+
