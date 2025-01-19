@@ -3,18 +3,22 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AlertTriangle, CheckCircle, Search } from 'lucide-react'
-import { simulateWebScrape, analyzeContent } from '../utils/webScraper'
+import { analyzeDigitalFootprint } from '../utils/webScraper'
 
 type AnalysisResult = {
   score: number
   issues: string[]
   recommendations: string[]
-  flaggedPosts: string[]
+  references: {
+    url: string
+    content: string
+    sentiment: 'positive' | 'negative' | 'neutral'
+  }[]
 }
 
 export default function FootprintPage() {
   const [analyzing, setAnalyzing] = useState(false)
-  const [username, setUsername] = useState('')
+  const [name, setName] = useState('')
   const [results, setResults] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -24,11 +28,10 @@ export default function FootprintPage() {
     setError(null)
 
     try {
-      const posts = await simulateWebScrape(username)
-      const analysis = await analyzeContent(posts)
+      const analysis = await analyzeDigitalFootprint(name)
       setResults(analysis)
     } catch (err) {
-      setError('An error occurred during the analysis. Please try again.')
+      setError('Une erreur s\'est produite lors de l\'analyse. Veuillez réessayer.')
     } finally {
       setAnalyzing(false)
     }
@@ -41,18 +44,18 @@ export default function FootprintPage() {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-2xl mx-auto"
       >
-        <h1 className="text-4xl font-bold text-center mb-8">Analyze Your Digital Footprint</h1>
+        <h1 className="text-4xl font-bold text-center mb-8">Analysez Votre Empreinte Numérique</h1>
         
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <form onSubmit={handleAnalyze} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Social Media Username</label>
+              <label className="block text-sm font-medium mb-2">Nom complet</label>
               <input
                 type="text"
                 className="w-full p-3 border rounded-lg"
-                placeholder="@username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Entrez un nom complet"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -65,12 +68,12 @@ export default function FootprintPage() {
               {analyzing ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  Analyzing...
+                  Analyse en cours...
                 </>
               ) : (
                 <>
                   <Search size={20} />
-                  Analyze my footprint
+                  Analyser mon empreinte
                 </>
               )}
             </button>
@@ -96,13 +99,13 @@ export default function FootprintPage() {
               >
                 <div className="text-center">
                   <div className="text-6xl font-bold mb-2">{results.score}/100</div>
-                  <p className="text-gray-600">Your digital footprint score</p>
+                  <p className="text-gray-600">Votre score d'empreinte numérique</p>
                 </div>
 
                 <div>
                   <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     <AlertTriangle className="text-yellow-500" />
-                    Areas of Concern
+                    Points d'attention
                   </h2>
                   <ul className="space-y-2">
                     {results.issues.map((issue, index) => (
@@ -117,7 +120,7 @@ export default function FootprintPage() {
                 <div>
                   <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
                     <CheckCircle className="text-green-500" />
-                    Recommendations
+                    Recommandations
                   </h2>
                   <ul className="space-y-2">
                     {results.recommendations.map((rec, index) => (
@@ -130,17 +133,33 @@ export default function FootprintPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-semibold mb-3">Flagged Posts</h2>
+                  <h2 className="text-xl font-semibold mb-3">Références trouvées</h2>
                   <div className="space-y-4">
-                    {results.flaggedPosts.map((post, index) => (
+                    {results.references.map((ref, index) => (
                       <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="bg-red-50 border border-red-200 rounded-lg p-4"
+                        className={`border rounded-lg p-4 ${
+                          ref.sentiment === 'positive' ? 'bg-green-50 border-green-200' :
+                          ref.sentiment === 'negative' ? 'bg-red-50 border-red-200' :
+                          'bg-gray-50 border-gray-200'
+                        }`}
                       >
-                        <p className="text-red-800 mb-2">{post}</p>
+                        <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline mb-2 block">{ref.url}</a>
+                        <p className={`${
+                          ref.sentiment === 'positive' ? 'text-green-800' :
+                          ref.sentiment === 'negative' ? 'text-red-800' :
+                          'text-gray-800'
+                        } mb-2`}>{ref.content}</p>
+                        <p className="text-sm font-semibold">
+                          Sentiment: {
+                            ref.sentiment === 'positive' ? 'Positif' :
+                            ref.sentiment === 'negative' ? 'Négatif' :
+                            'Neutre'
+                          }
+                        </p>
                       </motion.div>
                     ))}
                   </div>
@@ -153,4 +172,3 @@ export default function FootprintPage() {
     </div>
   )
 }
-
