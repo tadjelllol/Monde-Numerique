@@ -1,24 +1,25 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { AlertTriangle, CheckCircle, Search } from 'lucide-react'
-import { analyzeDigitalFootprint } from '../utils/webScraper'
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { AlertTriangle, CheckCircle, Search } from "lucide-react"
 
 type AnalysisResult = {
   score: number
   issues: string[]
   recommendations: string[]
   references: {
+    title: string
     url: string
     content: string
-    sentiment: 'positive' | 'negative' | 'neutral'
+    source: string
+    sentiment: "positive" | "negative" | "neutral"
   }[]
 }
 
 export default function FootprintPage() {
   const [analyzing, setAnalyzing] = useState(false)
-  const [name, setName] = useState('')
+  const [name, setName] = useState("")
   const [results, setResults] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -28,10 +29,22 @@ export default function FootprintPage() {
     setError(null)
 
     try {
-      const analysis = await analyzeDigitalFootprint(name)
-      setResults(analysis)
+      const response = await fetch("/api/analyze-footprint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to analyze footprint")
+      }
+
+      const data = await response.json()
+      setResults(data)
     } catch (err) {
-      setError('Une erreur s\'est produite lors de l\'analyse. Veuillez réessayer.')
+      setError("Une erreur s'est produite lors de l'analyse. Veuillez réessayer.")
     } finally {
       setAnalyzing(false)
     }
@@ -39,13 +52,9 @@ export default function FootprintPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl mx-auto"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8">Analysez Votre Empreinte Numérique</h1>
-        
+
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <form onSubmit={handleAnalyze} className="space-y-4">
             <div>
@@ -93,7 +102,7 @@ export default function FootprintPage() {
             {results && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 className="mt-8 space-y-6"
               >
@@ -142,23 +151,40 @@ export default function FootprintPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                         className={`border rounded-lg p-4 ${
-                          ref.sentiment === 'positive' ? 'bg-green-50 border-green-200' :
-                          ref.sentiment === 'negative' ? 'bg-red-50 border-red-200' :
-                          'bg-gray-50 border-gray-200'
+                          ref.sentiment === "positive"
+                            ? "bg-green-50 border-green-200"
+                            : ref.sentiment === "negative"
+                              ? "bg-red-50 border-red-200"
+                              : "bg-gray-50 border-gray-200"
                         }`}
                       >
-                        <a href={ref.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline mb-2 block">{ref.url}</a>
-                        <p className={`${
-                          ref.sentiment === 'positive' ? 'text-green-800' :
-                          ref.sentiment === 'negative' ? 'text-red-800' :
-                          'text-gray-800'
-                        } mb-2`}>{ref.content}</p>
+                        <div className="font-semibold mb-2">{ref.source}</div>
+                        <a
+                          href={ref.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline mb-2 block"
+                        >
+                          {ref.title}
+                        </a>
+                        <p
+                          className={`${
+                            ref.sentiment === "positive"
+                              ? "text-green-800"
+                              : ref.sentiment === "negative"
+                                ? "text-red-800"
+                                : "text-gray-800"
+                          } mb-2`}
+                        >
+                          {ref.content}
+                        </p>
                         <p className="text-sm font-semibold">
-                          Sentiment: {
-                            ref.sentiment === 'positive' ? 'Positif' :
-                            ref.sentiment === 'negative' ? 'Négatif' :
-                            'Neutre'
-                          }
+                          Sentiment:{" "}
+                          {ref.sentiment === "positive"
+                            ? "Positif"
+                            : ref.sentiment === "negative"
+                              ? "Négatif"
+                              : "Neutre"}
                         </p>
                       </motion.div>
                     ))}
@@ -172,3 +198,4 @@ export default function FootprintPage() {
     </div>
   )
 }
+
