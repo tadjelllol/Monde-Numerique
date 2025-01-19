@@ -1,6 +1,6 @@
 let userConfig = undefined
 try {
-  userConfig = await import('./v0-user-next.config')
+  userConfig = await import('./v0-user-next.config.mjs')
 } catch (e) {
   // ignore error
 }
@@ -29,8 +29,6 @@ const nextConfig = {
   },
 }
 
-mergeConfig(nextConfig, userConfig)
-
 function mergeConfig(nextConfig, userConfig) {
   if (!userConfig) {
     return
@@ -50,6 +48,8 @@ function mergeConfig(nextConfig, userConfig) {
     }
   }
 }
+
+mergeConfig(nextConfig, userConfig?.default)
 
 export default nextConfig
 

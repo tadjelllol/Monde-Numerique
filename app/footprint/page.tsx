@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { AlertTriangle, CheckCircle, Search } from "lucide-react"
+import { AlertTriangle, CheckCircle, Search, ExternalLink } from "lucide-react"
 
 type AnalysisResult = {
   score: number
@@ -163,21 +163,12 @@ export default function FootprintPage() {
                           href={ref.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline mb-2 block"
+                          className="text-blue-600 hover:underline mb-2 flex items-center gap-1"
                         >
                           {ref.title}
+                          <ExternalLink size={14} />
                         </a>
-                        <p
-                          className={`${
-                            ref.sentiment === "positive"
-                              ? "text-green-800"
-                              : ref.sentiment === "negative"
-                                ? "text-red-800"
-                                : "text-gray-800"
-                          } mb-2`}
-                        >
-                          {ref.content}
-                        </p>
+                        <p className="text-sm text-gray-600 mb-2">{ref.content}</p>
                         <p className="text-sm font-semibold">
                           Sentiment:{" "}
                           {ref.sentiment === "positive"
