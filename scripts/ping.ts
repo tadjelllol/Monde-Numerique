@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 const pingServer = async () => {
   try {
-    const response = await fetch('https://your-render-url.onrender.com/api/ping')
+    const response = await fetch('https://monde-numerique.onrender.com/api/ping')
     const data = await response.json()
     console.log('Ping successful:', data)
   } catch (error) {
