@@ -1,55 +1,64 @@
+import Image from "next/image"
+
 const tips = [
   {
     title: "Sécurité en ligne",
     items: [
       "Utilise des mots de passe forts : Inclue une combinaison de lettres, chiffres et symboles. Ne les partage avec personne.",
       "Vérifie les paramètres de confidentialité : Paramètre tes comptes pour contrôler qui peut voir tes publications.",
-      "Ne partage pas d'informations personnelles : Comme ton adresse, ton numéro de téléphone ou ton école."
-    ]
+      "Ne partage pas d'informations personnelles : Comme ton adresse, ton numéro de téléphone ou ton école.",
+    ],
+    image: "/images/online-security.jpg", // We'll add this image later
   },
   {
     title: "Vérification des Informations",
     items: [
       "Fais attention aux fake news : Vérifie toujours plusieurs sources avant de croire ou partager une information.",
-      "Regarde les sources : Privilégie les sites fiables (.edu, .gov, médias reconnus)."
-    ]
+      "Regarde les sources : Privilégie les sites fiables (.edu, .gov, médias reconnus).",
+    ],
+    image: "/images/fact-checking.jpg", // We'll add this image later
   },
   {
     title: "Gestion du Temps",
     items: [
       "Fixe des limites : Utilise des applications pour suivre ton temps d'écran.",
-      "Équilibre numérique et vie réelle : Prends des pauses et fais d'autres activités comme du sport ou des sorties avec des amis."
-    ]
+      "Équilibre numérique et vie réelle : Prends des pauses et fais d'autres activités comme du sport ou des sorties avec des amis.",
+    ],
+    image: "/images/time-management.jpg", // We'll add this image later
   },
   {
     title: "Respect et Communication Positive",
     items: [
-      "Pense avant de publier : \"Est-ce que ce que je poste est gentil, nécessaire et vrai ?\"",
+      'Pense avant de publier : "Est-ce que ce que je poste est gentil, nécessaire et vrai ?"',
       "Signale les comportements nuisibles : Cyberharcèlement, messages inappropriés, etc.",
-      "Sois bienveillant : Encourage les autres et ne participe pas aux messages négatifs."
-    ]
+      "Sois bienveillant : Encourage les autres et ne participe pas aux messages négatifs.",
+    ],
+    image: "/images/positive-communication.jpg", // We'll add this image later
   },
   {
     title: "Développer une Présence Numérique Positive",
     items: [
       "Partage des contenus positifs : Montre tes passions, projets créatifs ou centres d'intérêt.",
-      "Construis ton identité numérique : Ce que tu publies peut avoir un impact sur ton futur (comme les employeurs qui vérifient les réseaux sociaux)."
-    ]
+      "Construis ton identité numérique : Ce que tu publies peut avoir un impact sur ton futur (comme les employeurs qui vérifient les réseaux sociaux).",
+    ],
+    image: "/images/positive-presence.jpg", // We'll add this image later
   },
   {
     title: "Utilisation Éthique",
     items: [
       "Respecte les droits d'auteur : Donne du crédit aux créateurs de contenu que tu utilises ou partage.",
-      "Ne pirate pas : Télécharge les contenus de manière légale."
-    ]
+      "Ne pirate pas : Télécharge les contenus de manière légale.",
+    ],
+    image: "/images/ethical-use.jpg", // We'll add this image later
   },
   {
     title: "Éducation et Développement",
     items: [
       "Utilise Internet pour apprendre : Découvre des cours en ligne, des tutoriels ou des ressources pour tes passions.",
-      "Suis des personnes inspirantes : Trouve des modèles qui partagent des conseils motivants ou utiles."
-    ]
-  }
+      "Suis des personnes inspirantes : Trouve des modèles qui partagent des conseils motivants ou utiles.",
+    ],
+    image: "/images/education-development.jpg", // We'll add this image later
+  },
 ]
 
 export default function ConseilsPage() {
@@ -59,6 +68,9 @@ export default function ConseilsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {tips.map((tip, index) => (
           <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+            <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+              <Image src={tip.image || "/placeholder.svg"} alt={tip.title} layout="fill" objectFit="cover" />
+            </div>
             <h2 className="text-2xl font-semibold mb-4">{tip.title}</h2>
             <ul className="list-disc pl-5 space-y-2">
               {tip.items.map((item, itemIndex) => (
