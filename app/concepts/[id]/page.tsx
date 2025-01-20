@@ -93,7 +93,7 @@ export default function ConceptPage({ params }: { params: { id: string } }) {
             disabled={isGenerating}
             className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors"
           >
-            {isGenerating ? "Génération en cours..." : "Générer un nouvel exemple avec Mistral AI"}
+            {isGenerating ? "Génération en cours..." : "Générer un nouvel exemple"}
           </button>
           {generatedExample && (
             <div className="mt-4 p-4 bg-gray-100 rounded-md">
