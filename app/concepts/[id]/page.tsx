@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
+import { motion } from "framer-motion"
 import { generateMistralResponse } from "@/app/utils/mistralInterface"
 
 const concepts = [
@@ -78,32 +79,86 @@ export default function ConceptPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-6">{concept.title}</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+    <motion.div
+      className="container mx-auto px-4 py-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.h1
+        className="text-4xl font-bold mb-6"
+        initial={{ y: -50 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
+      >
+        {concept.title}
+      </motion.h1>
+      <motion.div
+        className="bg-white p-6 rounded-lg shadow-md"
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+      >
+        <motion.div
+          className="relative w-full h-64 mb-6 rounded-lg overflow-hidden"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
           <Image src={concept.image || "/placeholder.svg"} alt={concept.title} layout="fill" objectFit="cover" />
-        </div>
-        <p className="text-lg mb-4">{concept.content}</p>
-        <h2 className="text-2xl font-semibold mb-2">Exemple :</h2>
-        <p className="text-lg italic mb-4">{concept.example}</p>
-        <div className="mt-6">
-          <button
+        </motion.div>
+        <motion.p
+          className="text-lg mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          {concept.content}
+        </motion.p>
+        <motion.h2
+          className="text-2xl font-semibold mb-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          Exemple :
+        </motion.h2>
+        <motion.p
+          className="text-lg italic mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          {concept.example}
+        </motion.p>
+        <motion.div
+          className="mt-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <motion.button
             onClick={generateExample}
             disabled={isGenerating}
             className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {isGenerating ? "Génération en cours..." : "Générer un nouvel exemple"}
-          </button>
+          </motion.button>
           {generatedExample && (
-            <div className="mt-4 p-4 bg-gray-100 rounded-md">
+            <motion.div
+              className="mt-4 p-4 bg-gray-100 rounded-md"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              transition={{ duration: 0.3 }}
+            >
               <h3 className="text-xl font-semibold mb-2">Exemple généré :</h3>
               <p>{generatedExample}</p>
-            </div>
+            </motion.div>
           )}
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   )
 }
 
