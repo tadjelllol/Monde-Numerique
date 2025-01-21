@@ -56,15 +56,14 @@ export default function Home() {
       </motion.div>
 
       <motion.div className="text-center" variants={itemVariants}>
-        <Link href="/conseils">
-          <motion.a
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link
+            href="/conseils"
             className="inline-block bg-green-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Découvre nos conseils pour une présence en ligne positive
-          </motion.a>
-        </Link>
+          </Link>
+        </motion.div>
       </motion.div>
     </motion.div>
   )
