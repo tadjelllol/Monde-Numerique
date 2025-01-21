@@ -11,46 +11,43 @@ const concepts = [
     id: 1,
     title: "Les médias numériques sont en réseau",
     content:
-      "Dans l'ère numérique, l'information circule à une vitesse sans précédent. Lorsque vous publiez du contenu en ligne, il peut être instantanément partagé, commenté et redistribué à travers le monde entier. Cette interconnexion signifie que vos idées peuvent atteindre un public bien au-delà de votre cercle immédiat, créant des opportunités mais aussi des défis en termes de gestion de votre présence en ligne.",
-    example:
-      "Imaginez que vous postiez une vidéo de votre chat faisant un tour amusant. En quelques heures, elle pourrait être vue par des gens en Australie, au Brésil ou au Japon, créant une chaîne de partages et de réactions à l'échelle mondiale.",
-    image: "/images/networked-media.jpg", // We'll add this image later
+      "Dans l'ère numérique, l'information circule instantanément à l'échelle mondiale. Vos publications peuvent atteindre un public bien au-delà de votre cercle immédiat, créant des opportunités mais aussi des défis en termes de gestion de votre présence en ligne.",
+    example: "Une vidéo de chat postée à Paris peut devenir virale au Japon en quelques heures.",
+    image: "/images/networked-media.jpg",
   },
   {
     id: 2,
     title: "Les médias numériques ont des auditoires imprévus",
     content:
-      "Dans le monde numérique, le contrôle sur qui voit vos publications est souvent limité. Même avec des paramètres de confidentialité stricts, le contenu peut être partagé, capturé ou redistribué de manières inattendues. Cela signifie que vos messages peuvent atteindre des personnes que vous n'aviez pas envisagées comme public, y compris de futurs employeurs, des membres de la famille ou même des étrangers du monde entier.",
-    example:
-      "Vous postez une blague sur votre compte privé, pensant que seuls vos amis la verront. Mais si l'un d'eux la partage, elle pourrait être vue par leurs amis, leurs parents, ou même vos futurs employeurs, influençant potentiellement votre image professionnelle.",
-    image: "/images/unexpected-audience.jpg", // We'll add this image later
+      "Le contrôle sur qui voit vos publications en ligne est souvent limité. Le contenu peut être partagé ou redistribué de manières inattendues, atteignant des personnes que vous n'aviez pas envisagées comme public.",
+    example: "Une blague sur votre compte privé pourrait être vue par vos futurs employeurs si un ami la partage.",
+    image: "/images/unexpected-audience.jpg",
   },
   {
     id: 3,
     title: "Les médias numériques sont partageables et continus",
     content:
-      "Une fois qu'une information est publiée en ligne, elle peut persister indéfiniment. Même si vous supprimez le contenu original, des copies peuvent exister ailleurs sur internet. Cette permanence signifie que les actions en ligne peuvent avoir des conséquences à long terme, affectant votre réputation et vos opportunités futures. Il est crucial de réfléchir avant de publier et de comprendre l'impact potentiel à long terme de vos actions en ligne.",
-    example:
-      "Vous postez une photo embarrassante et la supprimez après quelques minutes. Cependant, pendant ce court laps de temps, quelqu'un a pu la sauvegarder ou faire une capture d'écran. Des années plus tard, cette photo pourrait réapparaître dans un contexte complètement différent.",
-    image: "/images/shareable-persistent.jpg", // We'll add this image later
+      "Une fois publiée, une information peut persister indéfiniment en ligne. Même si vous supprimez le contenu original, des copies peuvent exister ailleurs. Cette permanence peut avoir des conséquences à long terme sur votre réputation.",
+    example: "Une photo embarrassante supprimée après quelques minutes pourrait réapparaître des années plus tard.",
+    image: "/images/shareable-persistent.jpg",
   },
   {
     id: 4,
     title: "Nos interactions peuvent avoir un impact réel",
     content:
-      "Les actions en ligne ne sont pas isolées du monde réel. Elles peuvent avoir des conséquences tangibles sur nos vies et celles des autres. Un commentaire positif peut booster la confiance de quelqu'un, tandis qu'un message négatif peut causer un préjudice émotionnel réel. De plus, les mouvements sociaux, les campagnes de sensibilisation et même les décisions politiques peuvent être influencés par des actions collectives en ligne.",
+      "Les actions en ligne ne sont pas isolées du monde réel. Elles peuvent avoir des conséquences tangibles sur nos vies et celles des autres. Un commentaire peut influencer l'estime de soi de quelqu'un, tandis que des actions collectives en ligne peuvent influencer des mouvements sociaux.",
     example:
-      "Vous laissez un commentaire encourageant sur la vidéo d'un ami qui apprend à jouer de la guitare. Ce simple geste pourrait lui donner la confiance nécessaire pour continuer à pratiquer et même jouer en public un jour, transformant potentiellement sa vie.",
-    image: "/images/real-impact.jpg", // We'll add this image later
+      "Un commentaire encourageant sur une vidéo musicale pourrait inspirer quelqu'un à poursuivre une carrière artistique.",
+    image: "/images/real-impact.jpg",
   },
   {
     id: 5,
     title: "Notre expérience est façonnée par les outils numériques",
     content:
-      "Les algorithmes et la personnalisation jouent un rôle crucial dans notre expérience en ligne. Les réseaux sociaux, les moteurs de recherche et les plateformes de streaming utilisent des algorithmes sophistiqués pour déterminer ce que nous voyons. Cela peut créer des 'bulles de filtre' où nous sommes principalement exposés à des informations qui renforcent nos opinions existantes. Comprendre ce phénomène est essentiel pour développer un esprit critique et une vision équilibrée du monde.",
+      "Les algorithmes et la personnalisation jouent un rôle crucial dans notre expérience en ligne. Ils déterminent ce que nous voyons sur les réseaux sociaux, les moteurs de recherche et les plateformes de streaming, créant potentiellement des 'bulles de filtre'.",
     example:
-      "Si vous regardez beaucoup de vidéos sur les chats, vous remarquerez que YouTube vous suggère de plus en plus de contenus liés aux chats. C'est l'algorithme qui essaie de vous montrer ce qu'il pense que vous aimerez, basé sur votre historique de visionnage.",
-    image: "/images/digital-shaping.jpg", // We'll add this image later
+      "Si vous regardez beaucoup de vidéos sur les chats, YouTube vous suggérera de plus en plus de contenus liés aux chats.",
+    image: "/images/digital-shaping.jpg",
   },
 ]
 
@@ -66,7 +63,7 @@ export default function ConceptPage({ params }: { params: { id: string } }) {
   const generateExample = async () => {
     setIsGenerating(true)
     try {
-      const prompt = `Générez un exemple concret et détaillé pour illustrer le concept suivant du monde numérique : "${concept.title}". L'exemple doit être adapté à un public adolescent et doit clairement démontrer l'importance et l'application pratique de ce concept dans leur vie quotidienne. Répondez en français.`
+      const prompt = `Générez un exemple court et concret (max 50 mots) pour illustrer le concept suivant du monde numérique : "${concept.title}". L'exemple doit être adapté à un public adolescent et doit clairement démontrer l'importance et l'application pratique de ce concept dans leur vie quotidienne. Répondez en français.`
       const response = await generateMistralResponse(prompt)
       setGeneratedExample(response)
     } catch (error) {
