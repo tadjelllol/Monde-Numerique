@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={`${inter.className} bg-gray-50`}>
+      <body className={`${inter.className} bg-gradient-to-br from-purple-50 via-white to-teal-50`}>
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-grow animate-fadeIn">{children}</main>
