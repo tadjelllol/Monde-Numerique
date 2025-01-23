@@ -51,17 +51,29 @@ export default function FootprintPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">Analysez Votre Empreinte Numérique</h1>
+    <div className="min-h-screen py-8 px-4 bg-gradient-to-br from-purple-50 via-white to-teal-50">
+      <div className="max-w-4xl mx-auto">
+        <motion.h1
+          className="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Analysez Votre Empreinte Numérique
+        </motion.h1>
 
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+        <motion.div
+          className="bg-white p-8 rounded-xl shadow-lg border border-purple-100"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <form onSubmit={handleAnalyze} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Nom complet</label>
+              <label className="block text-sm font-medium mb-2 text-purple-900">Nom complet</label>
               <input
                 type="text"
-                className="w-full p-3 border rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 placeholder="Entrez un nom complet"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -69,23 +81,44 @@ export default function FootprintPage() {
               />
             </div>
 
-            <button
+            <motion.button
               type="submit"
               disabled={analyzing}
-              className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-purple-600 to-teal-600 text-white p-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               {analyzing ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                <span className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
                   Analyse en cours...
-                </>
+                </span>
               ) : (
-                <>
-                  <Search size={20} />
+                <span className="flex items-center justify-center">
+                  <Search size={20} className="mr-2" />
                   Analyser mon empreinte
-                </>
+                </span>
               )}
-            </button>
+            </motion.button>
           </form>
 
           {error && (
@@ -104,52 +137,70 @@ export default function FootprintPage() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.5 }}
                 className="mt-8 space-y-6"
               >
-                <div className="text-center">
-                  <div className="text-6xl font-bold mb-2">{results.score}/100</div>
+                <motion.div
+                  className="text-center"
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <div className="text-6xl font-bold mb-2 gradient-text">{results.score}/100</div>
                   <p className="text-gray-600">Votre score d'empreinte numérique</p>
-                </div>
+                </motion.div>
 
-                <div>
-                  <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                  <h2 className="text-xl font-semibold mb-3 flex items-center gap-2 text-purple-900">
                     <AlertTriangle className="text-yellow-500" />
                     Points d'attention
                   </h2>
                   <ul className="space-y-2">
                     {results.issues.map((issue, index) => (
-                      <li key={index} className="flex items-start gap-2">
+                      <motion.li
+                        key={index}
+                        className="flex items-start gap-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 + index * 0.1 }}
+                      >
                         <span className="text-red-500">•</span>
                         {issue}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
 
-                <div>
-                  <h2 className="text-xl font-semibold mb-3 flex items-center gap-2">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+                  <h2 className="text-xl font-semibold mb-3 flex items-center gap-2 text-purple-900">
                     <CheckCircle className="text-green-500" />
                     Recommandations
                   </h2>
                   <ul className="space-y-2">
                     {results.recommendations.map((rec, index) => (
-                      <li key={index} className="flex items-start gap-2">
+                      <motion.li
+                        key={index}
+                        className="flex items-start gap-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.6 + index * 0.1 }}
+                      >
                         <span className="text-green-500">•</span>
                         {rec}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
 
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Références trouvées</h2>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
+                  <h2 className="text-xl font-semibold mb-3 text-purple-900">Références trouvées</h2>
                   <div className="space-y-4">
                     {results.references.map((ref, index) => (
                       <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
+                        transition={{ delay: 0.8 + index * 0.1 }}
                         className={`border rounded-lg p-4 ${
                           ref.sentiment === "positive"
                             ? "bg-green-50 border-green-200"
@@ -158,7 +209,7 @@ export default function FootprintPage() {
                               : "bg-gray-50 border-gray-200"
                         }`}
                       >
-                        <div className="font-semibold mb-2">{ref.source}</div>
+                        <div className="font-semibold mb-2 text-purple-900">{ref.source}</div>
                         <a
                           href={ref.url}
                           target="_blank"
@@ -169,7 +220,7 @@ export default function FootprintPage() {
                           <ExternalLink size={14} />
                         </a>
                         <p className="text-sm text-gray-600 mb-2">{ref.content}</p>
-                        <p className="text-sm font-semibold">
+                        <p className="text-sm font-semibold text-purple-900">
                           Sentiment:{" "}
                           {ref.sentiment === "positive"
                             ? "Positif"
@@ -180,12 +231,12 @@ export default function FootprintPage() {
                       </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   )
 }
