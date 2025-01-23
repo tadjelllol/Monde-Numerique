@@ -7,21 +7,21 @@ const concepts = [
     id: 1,
     title: "Les médias numériques sont connectés partout",
     description: "Découvre comment les infos voyagent à la vitesse de l'éclair dans le monde numérique.",
-    image: "/images/concepts/connected-media.jpg",
+    image: "/images/concepts/connected-media.gif",
     gradient: "from-purple-500 to-teal-500",
   },
   {
     id: 2,
     title: "Les médias numériques touchent des gens inattendus",
     description: "Apprends pourquoi ton contenu peut atteindre des personnes que tu n'avais pas prévues.",
-    image: "/images/concepts/unexpected-audience.jpg",
+    image: "/images/concepts/unexpected-audience.gif",
     gradient: "from-teal-500 to-pink-500",
   },
   {
     id: 3,
     title: "Les médias numériques durent et se partagent facilement",
     description: "Comprends pourquoi ce que tu postes en ligne peut rester là pour toujours.",
-    image: "/images/concepts/persistent-media.jpg",
+    image: "/images/concepts/persistent-media.gif",
     gradient: "from-pink-500 to-purple-500",
   },
   {
@@ -35,7 +35,7 @@ const concepts = [
     id: 5,
     title: "Les outils numériques influencent ce qu'on voit",
     description: "Découvre comment les algorithmes façonnent ton expérience en ligne.",
-    image: "/images/concepts/digital-influence.jpg",
+    image: "/images/concepts/digital-influence.gif",
     gradient: "from-teal-500 to-purple-500",
   },
 ]

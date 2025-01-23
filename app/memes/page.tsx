@@ -8,9 +8,9 @@ const memes = [
   { src: "/images/memes/digital-literacy-meme1.jpg", alt: "Mème sur la littératie numérique 1" },
   { src: "/images/memes/digital-literacy-meme2.jpg", alt: "Mème sur la littératie numérique 2" },
   { src: "/images/memes/digital-literacy-meme3.jpg", alt: "Mème sur la littératie numérique 3" },
-  { src: "/images/memes/digital-literacy-meme4.jpg", alt: "Mème sur la littératie numérique 4" },
-  { src: "/images/memes/digital-literacy-meme5.jpg", alt: "Mème sur la littératie numérique 5" },
-  { src: "/images/memes/digital-literacy-meme6.jpg", alt: "Mème sur la littératie numérique 6" },
+  { src: "/images/memes/digital-literacy-meme4.png", alt: "Mème sur la littératie numérique 4" },
+  { src: "/images/memes/digital-literacy-meme5.png", alt: "Mème sur la littératie numérique 5" },
+  { src: "/images/memes/digital-literacy-meme6.gif", alt: "Mème sur la littératie numérique 6" },
 ]
 
 export default function MemesPage() {

@@ -11,7 +11,7 @@ const tips = [
       "Vérifie les paramètres de confidentialité : Paramètre tes comptes pour contrôler qui peut voir tes publications.",
       "Ne partage pas d'informations personnelles : Comme ton adresse, ton numéro de téléphone ou ton école.",
     ],
-    image: "/images/online-security.jpg",
+    image: "/images/online-security.png",
     gradient: "from-purple-500 to-teal-500",
   },
   {
@@ -48,7 +48,7 @@ const tips = [
       "Partage des contenus positifs : Montre tes passions, projets créatifs ou centres d'intérêt.",
       "Construis ton identité numérique : Ce que tu publies peut avoir un impact sur ton futur (comme les employeurs qui vérifient les réseaux sociaux).",
     ],
-    image: "/images/positive-presence.jpg",
+    image: "/images/positive-presence.png",
     gradient: "from-teal-500 to-pink-500",
   },
   {

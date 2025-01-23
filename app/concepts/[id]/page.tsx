@@ -13,7 +13,7 @@ const concepts = [
     content:
       "Dans le monde numérique, les infos voyagent super vite, parfois à l'autre bout du globe. Ce que tu postes peut toucher bien plus de gens que tu ne l'imagines. Ça peut être génial pour partager des idées, mais ça peut aussi être compliqué si tu perds le contrôle de ce que tu publies.",
     example: "Une vidéo marrante de ton chat postée à Paris peut devenir virale au Japon en quelques heures.",
-    image: "/images/concepts/connected-media.jpg",
+    image: "/images/concepts/connected-media.gif",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const concepts = [
     content:
       "Quand tu publies quelque chose en ligne, tu ne peux pas toujours décider qui va le voir. Une fois partagé, ton contenu peut atteindre des gens que tu n'avais pas prévus, et ça peut créer des surprises… pas toujours agréables.",
     example: "Une blague sur ton compte privé pourrait être vue par un futur employeur si quelqu'un la partage.",
-    image: "/images/concepts/unexpected-audience.jpg",
+    image: "/images/concepts/unexpected-audience.gif",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const concepts = [
     content:
       "Ce que tu postes en ligne peut rester là pour toujours, même si tu l'effaces. Des copies peuvent circuler ailleurs. C'est pour ça qu'il faut bien réfléchir avant de publier quelque chose, parce que ça pourrait revenir te poser problème plus tard.",
     example: "Une photo gênante supprimée après quelques minutes pourrait réapparaître des années plus tard.",
-    image: "/images/concepts/persistent-media.jpg",
+    image: "/images/concepts/persistent-media.gif",
   },
   {
     id: 4,
@@ -43,9 +43,9 @@ const concepts = [
     id: 5,
     title: "Les outils numériques influencent ce qu'on voit",
     content:
-      "Les réseaux sociaux et les applis te montrent surtout ce qu'ils pensent que tu aimes. C'est pratique, mais ça peut aussi te coincer dans une sorte de bulle où tu vois toujours les mêmes idées. Du coup, tu peux rater des trucs importants ou des points de vue différents.",
+      "Les réseaux sociaux et les applications vous montrent principalement ce qu'ils pensent que vous aimez. C'est utile, mais cela peut aussi vous enfermer dans une sorte de sphère où vous voyez toujours les mêmes idées. Vous risquez ainsi de manquer des choses importantes ou des points de vue différents. De plus, cela permet aux entreprises de vous cibler plus facilement avec des publicités adaptées à vos goûts, car en réalité, sur les réseaux sociaux, vous êtes le produit, vendu par le biais de la publicité.",
     example: "Si tu regardes plein de vidéos de chats, YouTube va te recommander encore plus de vidéos de chats.",
-    image: "/images/concepts/digital-influence.jpg",
+    image: "/images/concepts/digital-influence.gif",
   },
 ]
 
