@@ -4,34 +4,33 @@ import Image from "next/image"
 const concepts = [
   {
     id: 1,
-    title: "Les médias numériques sont en réseau",
-    description: "Découvrez comment l'interconnexion des médias numériques façonne notre monde de l'information.",
-    image: "/images/networked-media.jpg", // We'll add this image later
+    title: "Les médias numériques sont connectés partout",
+    description: "Découvre comment les infos voyagent à la vitesse de l'éclair dans le monde numérique.",
+    image: "/images/concepts/connected-media.gif",
   },
   {
     id: 2,
-    title: "Les médias numériques ont des auditoires imprévus",
-    description: "Explorez les implications de la portée étendue et souvent inattendue de vos publications en ligne.",
-    image: "/images/unexpected-audience.jpg", // We'll add this image later
+    title: "Les médias numériques touchent des gens inattendus",
+    description: "Apprends pourquoi ton contenu peut atteindre des personnes que tu n'avais pas prévues.",
+    image: "/images/concepts/unexpected-audience.gif",
   },
   {
     id: 3,
-    title: "Les médias numériques sont partageables et continus",
-    description: "Comprenez la nature durable et la facilité de partage des informations dans l'espace numérique.",
-    image: "/images/shareable-persistent.jpg", // We'll add this image later
+    title: "Les médias numériques durent et se partagent facilement",
+    description: "Comprends pourquoi ce que tu postes en ligne peut rester là pour toujours.",
+    image: "/images/concepts/persistent-media.gif",
   },
   {
     id: 4,
-    title: "Nos interactions peuvent avoir un impact réel",
-    description: "Analysez comment nos actions en ligne influencent le monde réel et les relations interpersonnelles.",
-    image: "/images/real-impact.jpg", // We'll add this image later
+    title: "Ce qu'on fait en ligne a des conséquences dans la vraie vie",
+    description: "Explore l'impact réel de tes actions en ligne sur toi et les autres.",
+    image: "/images/concepts/real-life-impact.jpg",
   },
   {
     id: 5,
-    title: "Notre expérience est façonnée par les outils numériques",
-    description:
-      "Découvrez comment les algorithmes et la personnalisation influencent notre perception du monde numérique.",
-    image: "/images/digital-shaping.jpg", // We'll add this image later
+    title: "Les outils numériques influencent ce qu'on voit",
+    description: "Découvre comment les algorithmes façonnent ton expérience en ligne.",
+    image: "/images/concepts/digital-influence.gif",
   },
 ]
 
@@ -41,10 +40,18 @@ export default function ConceptsPage() {
       <h1 className="text-4xl font-bold text-center mb-8">Concepts Clés du Monde Numérique</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {concepts.map((concept) => (
-          <Link key={concept.id} href={`/concepts/${concept.id}`} className="block">
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-                <Image src={concept.image || "/placeholder.svg"} alt={concept.title} layout="fill" objectFit="cover" />
+          <Link key={concept.id} href={`/concepts/${concept.id}`} passHref>
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+              <div className="relative w-full mb-4 rounded-lg overflow-hidden">
+                <div className="aspect-[16/9] relative">
+                  <Image
+                    src={concept.image || "/placeholder.svg"}
+                    alt={concept.title}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
               </div>
               <h2 className="text-2xl font-semibold mb-2">{concept.title}</h2>
               <p className="text-gray-600">{concept.description}</p>

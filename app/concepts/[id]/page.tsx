@@ -9,45 +9,43 @@ import { generateMistralResponse } from "@/app/utils/mistralInterface"
 const concepts = [
   {
     id: 1,
-    title: "Les médias numériques sont en réseau",
+    title: "Les médias numériques sont connectés partout",
     content:
-      "Dans l'ère numérique, l'information circule instantanément à l'échelle mondiale. Vos publications peuvent atteindre un public bien au-delà de votre cercle immédiat, créant des opportunités mais aussi des défis en termes de gestion de votre présence en ligne.",
-    example: "Une vidéo de chat postée à Paris peut devenir virale au Japon en quelques heures.",
-    image: "/images/networked-media.jpg",
+      "Dans le monde numérique, les infos voyagent super vite, parfois à l'autre bout du globe. Ce que tu postes peut toucher bien plus de gens que tu ne l'imagines. Ça peut être génial pour partager des idées, mais ça peut aussi être compliqué si tu perds le contrôle de ce que tu publies.",
+    example: "Une vidéo marrante de ton chat postée à Paris peut devenir virale au Japon en quelques heures.",
+    image: "/images/concepts/connected-media.gif",
   },
   {
     id: 2,
-    title: "Les médias numériques ont des auditoires imprévus",
+    title: "Les médias numériques touchent des gens inattendus",
     content:
-      "Le contrôle sur qui voit vos publications en ligne est souvent limité. Le contenu peut être partagé ou redistribué de manières inattendues, atteignant des personnes que vous n'aviez pas envisagées comme public.",
-    example: "Une blague sur votre compte privé pourrait être vue par vos futurs employeurs si un ami la partage.",
-    image: "/images/unexpected-audience.jpg",
+      "Quand tu publies quelque chose en ligne, tu ne peux pas toujours décider qui va le voir. Une fois partagé, ton contenu peut atteindre des gens que tu n'avais pas prévus, et ça peut créer des surprises… pas toujours agréables.",
+    example: "Une blague sur ton compte privé pourrait être vue par un futur employeur si quelqu'un la partage.",
+    image: "/images/concepts/unexpected-audience.gif",
   },
   {
     id: 3,
-    title: "Les médias numériques sont partageables et continus",
+    title: "Les médias numériques durent et se partagent facilement",
     content:
-      "Une fois publiée, une information peut persister indéfiniment en ligne. Même si vous supprimez le contenu original, des copies peuvent exister ailleurs. Cette permanence peut avoir des conséquences à long terme sur votre réputation.",
-    example: "Une photo embarrassante supprimée après quelques minutes pourrait réapparaître des années plus tard.",
-    image: "/images/shareable-persistent.jpg",
+      "Ce que tu postes en ligne peut rester là pour toujours, même si tu l'effaces. Des copies peuvent circuler ailleurs. C'est pour ça qu'il faut bien réfléchir avant de publier quelque chose, parce que ça pourrait revenir te poser problème plus tard.",
+    example: "Une photo gênante supprimée après quelques minutes pourrait réapparaître des années plus tard.",
+    image: "/images/concepts/persistent-media.gif",
   },
   {
     id: 4,
-    title: "Nos interactions peuvent avoir un impact réel",
+    title: "Ce qu'on fait en ligne a des conséquences dans la vraie vie",
     content:
-      "Les actions en ligne ne sont pas isolées du monde réel. Elles peuvent avoir des conséquences tangibles sur nos vies et celles des autres. Un commentaire peut influencer l'estime de soi de quelqu'un, tandis que des actions collectives en ligne peuvent influencer des mouvements sociaux.",
-    example:
-      "Un commentaire encourageant sur une vidéo musicale pourrait inspirer quelqu'un à poursuivre une carrière artistique.",
-    image: "/images/real-impact.jpg",
+      "Ce que tu dis ou fais sur Internet peut avoir un vrai impact. Ça peut être positif, comme inspirer quelqu'un ou participer à un mouvement important. Mais ça peut aussi être négatif, comme blesser quelqu'un avec un commentaire méchant.",
+    example: "Un message sympa sur une vidéo musicale pourrait motiver quelqu'un à devenir artiste.",
+    image: "/images/concepts/real-life-impact.jpg",
   },
   {
     id: 5,
-    title: "Notre expérience est façonnée par les outils numériques",
+    title: "Les outils numériques influencent ce qu'on voit",
     content:
-      "Les algorithmes et la personnalisation jouent un rôle crucial dans notre expérience en ligne. Ils déterminent ce que nous voyons sur les réseaux sociaux, les moteurs de recherche et les plateformes de streaming, créant potentiellement des 'bulles de filtre'.",
-    example:
-      "Si vous regardez beaucoup de vidéos sur les chats, YouTube vous suggérera de plus en plus de contenus liés aux chats.",
-    image: "/images/digital-shaping.jpg",
+      "Les réseaux sociaux et les applications vous montrent principalement ce qu'ils pensent que vous aimez. C'est pratique, mais cela peut aussi vous enfermer dans une sorte de sphère où vous voyez toujours les mêmes idées. Vous risquez ainsi de manquer des choses importantes ou des points de vue différents. De plus, cela permet aux entreprises de vous cibler plus facilement avec des publicités adaptées à vos goûts, car en réalité, sur les réseaux sociaux, vous êtes le produit, vendu par le biais de la publicité.",
+    example: "Si tu regardes plein de vidéos de chats, YouTube va te recommander encore plus de vidéos de chats.",
+    image: "/images/concepts/digital-influence.gif",
   },
 ]
 
@@ -97,11 +95,19 @@ export default function ConceptPage({ params }: { params: { id: string } }) {
         transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
       >
         <motion.div
-          className="relative w-full h-64 mb-6 rounded-lg overflow-hidden"
+          className="relative w-full mb-6 rounded-lg overflow-hidden"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <Image src={concept.image || "/placeholder.svg"} alt={concept.title} layout="fill" objectFit="cover" />
+          <div className="aspect-[16/9] relative">
+            <Image
+              src={concept.image || "/placeholder.svg"}
+              alt={concept.title}
+              fill
+              className="object-contain"
+              sizes="(max-width: 1200px) 100vw, 1200px"
+            />
+          </div>
         </motion.div>
         <motion.p
           className="text-lg mb-4"
