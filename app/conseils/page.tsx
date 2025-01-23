@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { ClientSideAnimation } from "@/components/ClientSideAnimation"
 
 const tips = [
   {
@@ -75,58 +75,45 @@ export default function ConseilsPage() {
   return (
     <div className="min-h-screen py-8 px-4 bg-gradient-to-br from-purple-50 via-white to-teal-50">
       <div className="max-w-7xl mx-auto">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Conseils pour une Présence en Ligne Positive
-        </motion.h1>
+        <ClientSideAnimation>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 gradient-text">
+            Conseils pour une Présence en Ligne Positive
+          </h1>
+        </ClientSideAnimation>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {tips.map((tip, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-xl overflow-hidden shadow-lg border border-purple-100"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div className="relative h-48">
-                <Image src={tip.image || "/placeholder.svg"} alt={tip.title} layout="fill" objectFit="cover" />
-                <div className={`absolute inset-0 bg-gradient-to-br ${tip.gradient} opacity-60`}></div>
-                <h2 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{tip.title}</h2>
+            <ClientSideAnimation key={index} delay={index * 0.1}>
+              <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-purple-100">
+                <div className="relative h-48">
+                  <Image src={tip.image || "/placeholder.svg"} alt={tip.title} layout="fill" objectFit="cover" />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${tip.gradient} opacity-60`}></div>
+                  <h2 className="absolute bottom-4 left-4 text-2xl font-bold text-white">{tip.title}</h2>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-2">
+                    {tip.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start">
+                        <svg
+                          className="w-6 h-6 text-teal-500 mr-2 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          ></path>
+                        </svg>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div className="p-6">
-                <ul className="space-y-2">
-                  {tip.items.map((item, itemIndex) => (
-                    <motion.li
-                      key={itemIndex}
-                      className="flex items-start"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 + itemIndex * 0.1 }}
-                    >
-                      <svg
-                        className="w-6 h-6 text-teal-500 mr-2 flex-shrink-0"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
+            </ClientSideAnimation>
           ))}
         </div>
       </div>

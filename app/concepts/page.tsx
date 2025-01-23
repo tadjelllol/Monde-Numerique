@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { ClientSideAnimation } from "@/components/ClientSideAnimation"
 
 const concepts = [
   {
@@ -44,23 +44,15 @@ export default function ConceptsPage() {
   return (
     <div className="min-h-screen py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold text-center mb-8 gradient-text"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Concepts Clés du Monde Numérique
-        </motion.h1>
+        <ClientSideAnimation>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 gradient-text">
+            Concepts Clés du Monde Numérique
+          </h1>
+        </ClientSideAnimation>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {concepts.map((concept, index) => (
-            <motion.div
-              key={concept.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
+            <ClientSideAnimation key={concept.id} delay={index * 0.1}>
               <Link href={`/concepts/${concept.id}`}>
                 <div className="bg-white rounded-xl overflow-hidden card-hover border border-purple-100">
                   <div className="relative">
@@ -92,7 +84,7 @@ export default function ConceptsPage() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </ClientSideAnimation>
           ))}
         </div>
       </div>
